@@ -18,25 +18,29 @@ from tqdm import tqdm
 import json
 from openpyxl import load_workbook
 def set_chrome_debug(visualize):
+    os.environ["PATH"] += os.pathsep + "/usr/bin/chromium-browser"
     chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
     # Create ChromeOptions instance
     subprocess.Popen(
-        r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chromeCookie"')
+    [
+        "/usr/bin/chromium-browser",  # Linux 기반 Streamlit Cloud에서 Chromium 실행
+        "--remote-debugging-port=9222",
+        "--user-data-dir=/tmp/chromeCookie"  # Linux에서 사용할 쿠키 저장소 경로
+    ],
+    stdout=subprocess.DEVNULL,  # 로그 출력 방지
+    stderr=subprocess.DEVNULL,  # 에러 로그 출력 방지
+)
     webdriver_options = webdriver.ChromeOptions()
 
     if not visualize:
         webdriver_options.add_argument('headless')
 
     try:
-        webdriver_options.add_argument('--no-sandbox')
-        webdriver_options.add_argument('--disable-dev-shm-usage')
-        webdriver_options.add_argument('--ignore-certificate-errors')
-
-        webdriver_options.add_argument("disable-gpu")
-        webdriver_options.add_argument("disable-infobars")
-        webdriver_options.add_argument("--disable-extensions")
-
-        webdriver_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+        options = webdriver.ChromeOptions()
+        options.binary_location = "/usr/bin/chromium-browser"  # Streamlit Cloud에서 Chromium 실행 경로
+        options.add_argument("--headless")  # Streamlit Cloud에서는 반드시 headless 모드 사용
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
         driver = webdriver.Chrome(options=webdriver_options)
 
     except:
