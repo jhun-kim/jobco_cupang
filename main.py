@@ -41,7 +41,7 @@ def set_chrome_debug(visualize):
         options.add_argument("--headless")  # Streamlit Cloud에서는 반드시 headless 모드 사용
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
-        driver = webdriver.Chrome(options=webdriver_options)
+        driver = webdriver.Chrome(options=options)
 
     except:
         chromedriver_autoinstaller.install(True)
