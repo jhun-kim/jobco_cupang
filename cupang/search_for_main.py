@@ -3,7 +3,7 @@ import time
 from main import *
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-#import pyautogui
+
 
 def cu_main(keyword):
     url = 'https://www.coupang.com'
