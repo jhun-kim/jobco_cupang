@@ -6,10 +6,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 #import plotly.express as px
-from graphviz import Source
-import pdfkit
-import sqlite3
-from PIL import Image
+#from graphviz import Source
+#import pdfkit
+#import sqlite3
+#from PIL import Image
 from main import *
 from cupang.main import *
 from cupang.search_for_main import *
